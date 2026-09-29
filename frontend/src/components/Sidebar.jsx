@@ -63,14 +63,15 @@ function Sidebar() {
               Collection Management
             </a>
 
+
             <a
-              href="/sanitation"
+              href="/admin-sanitization"
               className="sidebar-link"
             >
               <Sparkles size={19} />
-              Sanitization
+               Sanitization
             </a>
-
+            
             <a
               href="#"
               className="sidebar-link"
@@ -123,11 +124,11 @@ function Sidebar() {
             </a>
 
             <a
-              href="/admin-sanitization"
+              href="/sanitation"
               className="sidebar-link"
             >
               <Sparkles size={19} />
-               Sanitization
+              Sanitization
             </a>
 
             <p className="menu-title second">
