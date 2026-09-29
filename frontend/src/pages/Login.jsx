@@ -48,9 +48,13 @@ function Login() {
         "ecoguardUser",
         JSON.stringify(data.user)
       );
-
-      // Go to dashboard
-      navigate("/dashboard");
+  
+      // Go to the correct dashboard based on user role
+       if (data.user?.role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
 
     } catch (err) {
       console.error("Login error:", err);
