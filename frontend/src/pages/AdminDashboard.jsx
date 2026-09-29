@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+console.log("NEW ADMIN DASHBOARD LOADED");
 import { Link } from "react-router-dom";
 import {
   ShieldCheck,
@@ -10,6 +11,7 @@ import {
   RefreshCw,
   ArrowLeft,
   Search,
+  Truck,
 } from "lucide-react";
 
 function AdminDashboard() {
@@ -29,10 +31,7 @@ function AdminDashboard() {
       setLoading(true);
       setError("");
 
-      // Get logged-in user's JWT
-      const token = localStorage.getItem(
-        "ecoguardToken"
-      );
+      const token = localStorage.getItem("ecoguardToken");
 
       if (!token) {
         throw new Error(
@@ -60,10 +59,7 @@ function AdminDashboard() {
 
       setReports(data);
     } catch (err) {
-      console.error(
-        "Fetch admin reports error:",
-        err
-      );
+      console.error("Fetch admin reports error:", err);
 
       setError(
         err.message ||
@@ -84,19 +80,12 @@ function AdminDashboard() {
   // ==========================================
   // UPDATE REPORT STATUS
   // ==========================================
-  const updateStatus = async (
-    reportId,
-    newStatus
-  ) => {
+  const updateStatus = async (reportId, newStatus) => {
     try {
-      const token = localStorage.getItem(
-        "ecoguardToken"
-      );
+      const token = localStorage.getItem("ecoguardToken");
 
       if (!token) {
-        alert(
-          "Please login before updating reports."
-        );
+        alert("Please login before updating reports.");
         return;
       }
 
@@ -118,12 +107,10 @@ function AdminDashboard() {
 
       if (!response.ok) {
         throw new Error(
-          data.message ||
-            "Failed to update report status."
+          data.message || "Failed to update report status."
         );
       }
 
-      // Update screen immediately
       setReports((currentReports) =>
         currentReports.map((report) =>
           report._id === reportId
@@ -135,10 +122,7 @@ function AdminDashboard() {
         )
       );
     } catch (err) {
-      console.error(
-        "Update status error:",
-        err
-      );
+      console.error("Update status error:", err);
 
       alert(
         err.message ||
@@ -200,8 +184,7 @@ function AdminDashboard() {
   // ==========================================
   const filteredReports = reports.filter(
     (report) => {
-      const searchText =
-        search.toLowerCase();
+      const searchText = search.toLowerCase();
 
       const matchesSearch =
         report.reportId
@@ -238,30 +221,25 @@ function AdminDashboard() {
   // ==========================================
   const totalReports = reports.length;
 
-  const pendingReports =
-    reports.filter(
-      (report) =>
-        report.status ===
-        "Pending Review"
-    ).length;
+  const pendingReports = reports.filter(
+    (report) =>
+      report.status === "Pending Review"
+  ).length;
 
-  const progressReports =
-    reports.filter(
-      (report) =>
-        report.status === "In Progress"
-    ).length;
+  const progressReports = reports.filter(
+    (report) =>
+      report.status === "In Progress"
+  ).length;
 
-  const resolvedReports =
-    reports.filter(
-      (report) =>
-        report.status === "Resolved"
-    ).length;
+  const resolvedReports = reports.filter(
+    (report) =>
+      report.status === "Resolved"
+  ).length;
 
-  const highSeverityReports =
-    reports.filter(
-      (report) =>
-        report.severity === "High"
-    ).length;
+  const highSeverityReports = reports.filter(
+    (report) =>
+      report.severity === "High"
+  ).length;
 
   return (
     <div className="admin-page">
@@ -291,6 +269,18 @@ function AdminDashboard() {
 
         <div className="admin-header-actions">
 
+          {/* COLLECTION MANAGEMENT */}
+
+          <Link
+            to="/admin-collection"
+            className="admin-back-button"
+          >
+            <Truck size={16} />
+            Manage Collections
+          </Link>
+
+          {/* REFRESH */}
+
           <button
             className="admin-refresh-button"
             onClick={fetchReports}
@@ -302,6 +292,8 @@ function AdminDashboard() {
               ? "Loading..."
               : "Refresh"}
           </button>
+
+          {/* DASHBOARD */}
 
           <Link
             to="/dashboard"
@@ -337,6 +329,87 @@ function AdminDashboard() {
           </p>
 
         </div>
+
+      </div>
+
+      {/* =====================================
+          ADMIN QUICK ACTION
+      ====================================== */}
+
+      <div
+        style={{
+          marginBottom: "24px",
+          padding: "20px",
+          borderRadius: "16px",
+          background: "#f4faf7",
+          border: "1px solid #dcebe4",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+          }}
+        >
+
+          <div
+            style={{
+              width: "44px",
+              height: "44px",
+              borderRadius: "12px",
+              background: "#e0f1ea",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#1e5a4b",
+            }}
+          >
+            <Truck size={22} />
+          </div>
+
+          <div>
+
+            <strong
+              style={{
+                display: "block",
+                color: "#173c35",
+                marginBottom: "4px",
+              }}
+            >
+              Waste Collection Management
+            </strong>
+
+            <span
+              style={{
+                color: "#71857f",
+                fontSize: "14px",
+              }}
+            >
+              Review collection requests and
+              update pickup status.
+            </span>
+
+          </div>
+
+        </div>
+
+        <Link
+          to="/admin-collection"
+          className="admin-back-button"
+          style={{
+            textDecoration: "none",
+          }}
+        >
+          <Truck size={16} />
+          Open Collection Manager
+        </Link>
 
       </div>
 
@@ -450,6 +523,7 @@ function AdminDashboard() {
             setStatusFilter(e.target.value)
           }
         >
+
           <option value="All">
             All Status
           </option>
@@ -465,6 +539,7 @@ function AdminDashboard() {
           <option value="Resolved">
             Resolved
           </option>
+
         </select>
 
         <select
@@ -473,6 +548,7 @@ function AdminDashboard() {
             setSeverityFilter(e.target.value)
           }
         >
+
           <option value="All">
             All Severity
           </option>
@@ -630,9 +706,7 @@ function AdminDashboard() {
 
                     <div className="admin-detail">
 
-                      <AlertTriangle
-                        size={17}
-                      />
+                      <AlertTriangle size={17} />
 
                       <div>
 

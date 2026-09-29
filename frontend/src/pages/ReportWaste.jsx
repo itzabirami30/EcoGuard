@@ -52,10 +52,8 @@ function ReportWaste() {
     setSubmittedReport(null);
 
     try {
-      // Get JWT token from browser
-      const token = localStorage.getItem(
-        "ecoguardToken"
-      );
+      // Get JWT token
+      const token = localStorage.getItem("ecoguardToken");
 
       if (!token) {
         throw new Error(
@@ -63,15 +61,17 @@ function ReportWaste() {
         );
       }
 
+      // ==========================================
+      // SUBMIT WASTE REPORT
+      // ==========================================
+
       const response = await fetch(
         "http://localhost:5000/api/reports",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-
-            // Send JWT token
-            Authorization: `Bearer ${token}`,
+            Authorization: "Bearer " + token,
           },
           body: JSON.stringify({
             wasteType: formData.wasteType,
@@ -87,13 +87,55 @@ function ReportWaste() {
 
       if (!response.ok) {
         throw new Error(
-          data.message ||
-            "Failed to submit report."
+          data.message || "Failed to submit report."
         );
       }
 
+      // ==========================================
+      // ADD 20 ECO POINTS
+      // ==========================================
+
+      try {
+        const rewardResponse = await fetch(
+          "http://localhost:5000/api/rewards/add",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+            body: JSON.stringify({
+              action: "report",
+            }),
+          }
+        );
+
+        const rewardData = await rewardResponse.json();
+
+        if (!rewardResponse.ok) {
+          console.error(
+            "Reward update failed:",
+            rewardData.message
+          );
+        } else {
+          console.log(
+            "Eco Points added:",
+            rewardData.message
+          );
+        }
+      } catch (rewardError) {
+        console.error(
+          "Eco reward update error:",
+          rewardError
+        );
+      }
+
+      // ==========================================
+      // SUCCESS
+      // ==========================================
+
       setSuccess(
-        "Waste report submitted successfully!"
+        "Waste report submitted successfully! You earned 20 Eco Points."
       );
 
       setSubmittedReport(data.report);
@@ -108,9 +150,11 @@ function ReportWaste() {
 
       setImage(null);
       setImagePreview(null);
-
     } catch (err) {
-      console.error("Report submission error:", err);
+      console.error(
+        "Report submission error:",
+        err
+      );
 
       setError(
         err.message ||
@@ -125,6 +169,7 @@ function ReportWaste() {
     <div className="report-waste-page">
 
       {/* HEADER */}
+
       <div className="report-waste-header">
 
         <div>
@@ -132,7 +177,9 @@ function ReportWaste() {
             COMMUNITY ACTION
           </div>
 
-          <h1>Report Waste</h1>
+          <h1>
+            Report Waste
+          </h1>
 
           <p>
             Report waste and sanitation issues in
@@ -151,12 +198,14 @@ function ReportWaste() {
       </div>
 
       {/* SUCCESS MESSAGE */}
+
       {success && submittedReport && (
         <div className="report-success">
 
           <CheckCircle size={24} />
 
           <div>
+
             <strong>
               {success}
             </strong>
@@ -173,29 +222,36 @@ function ReportWaste() {
               Status:{" "}
               {submittedReport.status}
             </span>
+
           </div>
 
         </div>
       )}
 
       {/* ERROR MESSAGE */}
+
       {error && (
         <div className="report-error">
 
           <AlertTriangle size={22} />
 
           <div>
+
             <strong>
               Unable to submit report
             </strong>
 
-            <p>{error}</p>
+            <p>
+              {error}
+            </p>
+
           </div>
 
         </div>
       )}
 
       {/* FORM */}
+
       <div className="report-waste-container">
 
         <form
@@ -204,6 +260,7 @@ function ReportWaste() {
         >
 
           {/* WASTE TYPE */}
+
           <div className="form-group">
 
             <label>
@@ -216,6 +273,7 @@ function ReportWaste() {
               onChange={handleChange}
               required
             >
+
               <option value="">
                 Select waste type
               </option>
@@ -251,11 +309,13 @@ function ReportWaste() {
               <option value="Other">
                 Other
               </option>
+
             </select>
 
           </div>
 
           {/* LOCATION */}
+
           <div className="form-group">
 
             <label>
@@ -275,6 +335,7 @@ function ReportWaste() {
           </div>
 
           {/* SEVERITY */}
+
           <div className="form-group">
 
             <label>
@@ -288,6 +349,7 @@ function ReportWaste() {
               onChange={handleChange}
               required
             >
+
               <option value="Low">
                 Low
               </option>
@@ -299,11 +361,13 @@ function ReportWaste() {
               <option value="High">
                 High
               </option>
+
             </select>
 
           </div>
 
           {/* DESCRIPTION */}
+
           <div className="form-group">
 
             <label>
@@ -323,6 +387,7 @@ function ReportWaste() {
           </div>
 
           {/* IMAGE */}
+
           <div className="form-group">
 
             <label>
@@ -342,6 +407,7 @@ function ReportWaste() {
                   marginTop: "15px",
                 }}
               >
+
                 <img
                   src={imagePreview}
                   alt="Waste preview"
@@ -352,12 +418,14 @@ function ReportWaste() {
                     borderRadius: "12px",
                   }}
                 />
+
               </div>
             )}
 
           </div>
 
           {/* SUBMIT */}
+
           <button
             type="submit"
             className="submit-report-button"

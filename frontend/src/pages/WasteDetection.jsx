@@ -25,44 +25,99 @@ function WasteDetection() {
     setResult(null);
   };
 
- const analyzeWaste = async () => {
-  if (!selectedImage) return;
+  const analyzeWaste = async () => {
+    if (!selectedImage) return;
 
-  setAnalyzing(true);
-  setResult(null);
+    setAnalyzing(true);
+    setResult(null);
 
-  try {
-    const formData = new FormData();
+    try {
+      // ==========================================
+      // 1. SEND IMAGE TO AI
+      // ==========================================
 
-    formData.append("image", selectedImage);
+      const formData = new FormData();
 
-    const response = await fetch(
-      "http://localhost:5000/api/detection",
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+      formData.append("image", selectedImage);
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(
-        data.message || "Failed to analyze waste image."
+      const response = await fetch(
+        "http://localhost:5000/api/detection",
+        {
+          method: "POST",
+          body: formData,
+        }
       );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.message ||
+            "Failed to analyze waste image."
+        );
+      }
+
+      // Show AI result
+      setResult(data.result);
+
+      // ==========================================
+      // 2. ADD 10 ECO POINTS
+      // ==========================================
+
+      const token = localStorage.getItem(
+        "ecoguardToken"
+      );
+
+      if (token) {
+        try {
+          const rewardResponse = await fetch(
+            "http://localhost:5000/api/rewards/add",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: "Bearer " + token,
+              },
+              body: JSON.stringify({
+                action: "ai_detection",
+              }),
+            }
+          );
+
+          const rewardData =
+            await rewardResponse.json();
+
+          if (!rewardResponse.ok) {
+            console.error(
+              "Reward update failed:",
+              rewardData.message
+            );
+          } else {
+            console.log(
+              "Eco Points added:",
+              rewardData.message
+            );
+          }
+        } catch (rewardError) {
+          console.error(
+            "Eco reward update error:",
+            rewardError
+          );
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Waste detection error:",
+        error
+      );
+
+      alert(
+        "Unable to analyze the image. Please make sure the backend is running."
+      );
+    } finally {
+      setAnalyzing(false);
     }
-
-    setResult(data.result);
-  } catch (error) {
-    console.error("Waste detection error:", error);
-
-    alert(
-      "Unable to analyze the image. Please make sure the backend is running."
-    );
-  } finally {
-    setAnalyzing(false);
-  }
-};
+  };
 
   const resetDetection = () => {
     setSelectedImage(null);
@@ -79,6 +134,7 @@ function WasteDetection() {
       <div className="detection-header">
 
         <div>
+
           <div className="page-label">
             AI POWERED
           </div>
@@ -91,6 +147,7 @@ function WasteDetection() {
             Upload a waste image and let EcoGuard identify
             the correct waste category and disposal method.
           </p>
+
         </div>
 
         <div className="detection-header-icon">
@@ -111,6 +168,7 @@ function WasteDetection() {
           <div className="card-heading">
 
             <div>
+
               <h2>
                 Upload Waste Image
               </h2>
@@ -118,6 +176,7 @@ function WasteDetection() {
               <p>
                 Take a photo or choose an image from your device.
               </p>
+
             </div>
 
             <Camera size={22} />
@@ -301,7 +360,8 @@ function WasteDetection() {
                   <div
                     className="confidence-fill"
                     style={{
-                      width: `${result.confidence}%`,
+                      width:
+                        result.confidence + "%",
                     }}
                   ></div>
 

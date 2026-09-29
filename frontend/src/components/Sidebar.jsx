@@ -62,8 +62,8 @@ function Sidebar() {
           ECO COMMUNITY
         </p>
 
-        <a href="#" className="sidebar-link">
-          <Award size={19} />
+        <a href="/eco-rewards" className="sidebar-link"
+>         <Award size={19} />
           Eco Rewards
         </a>
 
