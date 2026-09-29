@@ -123,11 +123,11 @@ function Sidebar() {
             </a>
 
             <a
-              href="/sanitation"
+              href="/admin-sanitization"
               className="sidebar-link"
             >
               <Sparkles size={19} />
-              Sanitization
+               Sanitization
             </a>
 
             <p className="menu-title second">

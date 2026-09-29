@@ -19,6 +19,7 @@ import AdminCollection from "./pages/AdminCollection";
 import MyCollections from "./pages/MyCollections";
 import EcoRewards from "./pages/EcoRewards";
 import Sanitization from "./pages/Sanitization";
+import AdminSanitization from "./pages/AdminSanitization";
 
 function App() {
 
@@ -95,6 +96,11 @@ function App() {
         <Route
           path="/sanitation"
           element={<Sanitization />}
+        />
+
+        <Route
+          path="/admin-sanitization"
+          element={<AdminSanitization />}
         />
 
       </Routes>
