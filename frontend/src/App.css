@@ -6408,3 +6408,203 @@ footer p {
   background: #eaf7ef;
   color: #247044;
 }
+
+/* =========================================
+   ADMIN SANITIZATION
+   ========================================= */
+
+.admin-sanitation-card {
+  width: 100%;
+}
+
+.admin-sanitation-status-section {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid #e6ece9;
+}
+
+.admin-sanitation-status-section .sanitation-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Make admin request cards match the rest of EcoGuard */
+.sanitation-request-card {
+  background: #ffffff;
+  border: 1px solid #e4ebe8;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 3px 12px rgba(28, 59, 54, 0.06);
+  transition: all 0.2s ease;
+}
+
+.sanitation-request-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(28, 59, 54, 0.10);
+}
+
+.sanitation-request-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.sanitation-request-id {
+  color: #28524c;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.sanitation-issue {
+  margin: 0 0 14px;
+  color: #1c3b36;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sanitation-detail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 8px 0;
+  color: #5f706b;
+  font-size: 14px;
+}
+
+.sanitation-detail svg {
+  flex-shrink: 0;
+  color: #3d6e65;
+}
+
+.sanitation-date {
+  display: block;
+  margin-top: 12px;
+  color: #8a9995;
+  font-size: 12px;
+}
+
+/* Status badges */
+
+.sanitation-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sanitation-status-reported {
+  background: #fff4df;
+  color: #a96f13;
+}
+
+.sanitation-status-assigned {
+  background: #eaf2ff;
+  color: #3568a8;
+}
+
+.sanitation-status-progress {
+  background: #e8f5ef;
+  color: #287054;
+}
+
+.sanitation-status-resolved {
+  background: #e4f5e9;
+  color: #287044;
+}
+
+/* Admin status dropdown */
+
+.admin-sanitation-status-section .sanitation-select {
+  width: 100%;
+  max-width: 320px;
+  padding: 11px 13px;
+  border: 1px solid #d7e2de;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #28524c;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-sanitation-status-section .sanitation-select:focus {
+  border-color: #3d6e65;
+  box-shadow: 0 0 0 3px rgba(61, 110, 101, 0.12);
+}
+
+/* Refresh button */
+
+.sanitation-refresh-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dce7e3;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #28524c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sanitation-refresh-button:hover {
+  background: #eef6f3;
+  border-color: #b9d1c9;
+  transform: rotate(10deg);
+}
+
+/* Empty / loading state */
+
+.sanitation-empty {
+  padding: 55px 20px;
+  text-align: center;
+  color: #78908a;
+}
+
+.sanitation-empty svg {
+  margin-bottom: 12px;
+  color: #3d6e65;
+}
+
+.sanitation-empty-title {
+  margin: 0 0 6px;
+  color: #28524c;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.sanitation-empty-text {
+  color: #879792;
+  font-size: 14px;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .sanitation-request-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sanitation-status {
+    align-self: flex-start;
+  }
+
+  .admin-sanitation-status-section .sanitation-select {
+    max-width: 100%;
+  }
+
+  .sanitation-request-card {
+    padding: 16px;
+  }
+}
