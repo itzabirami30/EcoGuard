@@ -8,6 +8,7 @@ const app = express();
 const authRoutes = require("./routes/authRoutes");
 const collectionRoutes = require("./routes/collectionRoutes.js");
 const ecoRewardRoutes = require("./routes/ecoRewardRoutes");
+const sanitationRoutes = require("./routes/sanitationRoutes");
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use("/api/detection", detectionRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/collection", collectionRoutes);
 app.use("/api/rewards", ecoRewardRoutes);
+app.use("/api/sanitation", sanitationRoutes);
 // Test route
 app.get("/", (req, res) => {
   res.json({
