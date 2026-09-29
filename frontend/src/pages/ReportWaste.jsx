@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -65,9 +66,7 @@ function ReportWaste() {
       // SUBMIT WASTE REPORT
       // ==========================================
 
-      const response = await fetch(
-        "http://localhost:5000/api/reports",
-        {
+      const response = await fetch(API_URL + "/api/reports", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -96,9 +95,7 @@ function ReportWaste() {
       // ==========================================
 
       try {
-        const rewardResponse = await fetch(
-          "http://localhost:5000/api/rewards/add",
-          {
+        const rewardResponse = await fetch(API_URL + "/api/rewards/add", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

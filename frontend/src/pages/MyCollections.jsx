@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useEffect, useState } from "react";
 import {
   Truck,
@@ -26,9 +27,7 @@ function MyCollections() {
         throw new Error("Please login to view your collections.");
       }
 
-      const response = await fetch(
-        "http://localhost:5000/api/collection/my",
-        {
+      const response = await fetch(API_URL + "/api/collection/my", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -1,5 +1,5 @@
+import { API_URL } from "../config";
 import React, { useEffect, useState } from "react";
-console.log("NEW ADMIN DASHBOARD LOADED");
 import { Link } from "react-router-dom";
 import {
   ShieldCheck,
@@ -39,9 +39,7 @@ function AdminDashboard() {
         );
       }
 
-      const response = await fetch(
-        "http://localhost:5000/api/reports",
-        {
+      const response = await fetch(API_URL + "/api/reports", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -89,9 +87,7 @@ function AdminDashboard() {
         return;
       }
 
-      const response = await fetch(
-        `http://localhost:5000/api/reports/${reportId}/status`,
-        {
+      const response = await fetch(`${API_URL}/api/reports/${reportId}/status`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -100,6 +96,7 @@ function AdminDashboard() {
           body: JSON.stringify({
             status: newStatus,
           }),
+          
         }
       );
 

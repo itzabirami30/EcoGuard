@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState } from "react";
 import {
   Truck,
@@ -44,9 +45,7 @@ function Collection() {
         throw new Error("Please login before requesting collection.");
       }
 
-      const response = await fetch(
-        "http://localhost:5000/api/collection",
-        {
+      const response = await fetch(API_URL + "/api/collection", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

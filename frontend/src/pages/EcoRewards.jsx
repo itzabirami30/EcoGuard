@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useEffect, useState } from "react";
 import {
   Award,
@@ -23,9 +24,7 @@ function EcoRewards() {
       setLoading(true);
       setError("");
 
-      const response = await fetch(
-        "http://localhost:5000/api/rewards/my",
-        {
+      const response = await fetch(API_URL + "/api/rewards/my", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

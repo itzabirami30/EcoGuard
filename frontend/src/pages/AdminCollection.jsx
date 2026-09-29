@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useEffect, useState } from "react";
 import {
   Truck,
@@ -26,9 +27,7 @@ function AdminCollection() {
         throw new Error("Please login as an admin.");
       }
 
-      const response = await fetch(
-        "http://localhost:5000/api/collection/admin",
-        {
+      const response = await fetch(API_URL + "/api/collection/admin", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -59,9 +58,7 @@ function AdminCollection() {
     try {
       const token = localStorage.getItem("ecoguardToken");
 
-      const response = await fetch(
-        `http://localhost:5000/api/collection/${id}/status`,
-        {
+      const response = await fetch(API_URL + "/api/collection/admin", {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

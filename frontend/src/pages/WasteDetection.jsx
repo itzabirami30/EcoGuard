@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useState } from "react";
 import {
   Camera,
@@ -40,9 +41,7 @@ function WasteDetection() {
 
       formData.append("image", selectedImage);
 
-      const response = await fetch(
-        "http://localhost:5000/api/detection",
-        {
+      const response = await fetch(API_URL + "/api/detection", {
           method: "POST",
           body: formData,
         }
@@ -70,9 +69,7 @@ function WasteDetection() {
 
       if (token) {
         try {
-          const rewardResponse = await fetch(
-            "http://localhost:5000/api/rewards/add",
-            {
+          const rewardResponse = await fetch(API_URL + "/api/rewards/add", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

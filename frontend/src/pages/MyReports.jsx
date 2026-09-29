@@ -1,3 +1,4 @@
+import { API_URL } from "../config";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -36,9 +37,7 @@ function MyReports() {
       }
 
       // Request only this user's reports
-      const response = await fetch(
-        "http://localhost:5000/api/reports/my",
-        {
+      const response = await fetch(API_URL + "/api/reports/my", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
